@@ -13,7 +13,6 @@ passp() {
 	regex="s/$char/$char\n/g"
 	num_char="$(echo $pass | sed $regex | wc -l | echo $(cat) - 1 | bc)"
 	pass_valid="$(echo $range_start \<= $num_char \&\& $range_end \>= $num_char | bc)"
-
 	echo $pass_valid
 }
 
