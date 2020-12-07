@@ -14,7 +14,7 @@ const isValidPassport = (passport) => {
 }
 
 fs.readFile('./input', 'utf-8')
-	.then(input => input.split('\n'))
+  .then(input => input.split('\n'))
   //.then(input => input.slice(0, 20)) // TESTING
   .then(input => input.reduce((a, v) => {
     if (/$^/.test(v)) a.push('');
