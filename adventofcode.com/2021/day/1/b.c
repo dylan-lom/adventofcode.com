@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-char *nextline(void) {
+char *
+nextline(void)
+{
     static char *line;
     static size_t n;
 
@@ -15,8 +17,6 @@ char *nextline(void) {
     return line;
 }
 
-int result;
-
 int
 main(void)
 {
@@ -24,7 +24,6 @@ main(void)
     char *line;
     int lineno = 0;
     while ((line = nextline()) != NULL) {
-//        printf(" == %d | %d | %d ==\n", windows[0], windows[1], windows[2]);
         if (windows[lineno % 3] != -1) {
             printf("%d\n", windows[lineno % 3]);
          }
@@ -39,5 +38,6 @@ main(void)
 
         lineno++;
     }
+
     printf("%d\n", windows[lineno % 3]);
 }
