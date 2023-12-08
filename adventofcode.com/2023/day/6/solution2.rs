@@ -1,5 +1,6 @@
 use std::convert::TryFrom;
 use std::fs::read_to_string;
+use std::convert::TryInto;
 
 /* yoink https://doc.rust-lang.org/stable/rust-by-example/std_misc/file/read_lines.html */
 fn read_lines(filename: &str) -> Vec<String> {
@@ -20,12 +21,15 @@ fn extract_numbers(line: String) -> Vec<u64> {
     .collect()
 }
 
-fn winning_outcomes(T: u64, D: u64) -> Vec<u64> {
-  (0..T)
+fn winning_outcomes(T: u64, D: u64) -> u64 {
+  let v0: u64 = (0..T)
       .map(|t| (T - t) * t)
-      .filter(|d| d > &D)
-      .collect()
+      .position(|d| d > D)
+      .expect("there should be some winning value")
+      .try_into()
+      .unwrap();
 
+  T - (2 * v0) + ((T + 1) % 2)
 }
 
 fn main() {
@@ -35,7 +39,7 @@ fn main() {
   let distance = extract_numbers(iter.next().unwrap().to_string());
   let races: Vec<(&u64, u64)> = time.iter().zip(distance).collect();
   let outcomes: Vec<u64> = races.iter()
-      .map(|(T, D)| u64::try_from(winning_outcomes(**T, *D).len()).unwrap())
+      .map(|(T, D)| winning_outcomes(**T, *D))
       .collect();
 
   let result = outcomes.iter()
